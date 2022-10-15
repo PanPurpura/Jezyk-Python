@@ -1,3 +1,3 @@
 # Jezyk-Python
-Zadania wykonwane w ramach przedmiotu język python
+# Zadania wykonwane w ramach przedmiotu język python
 Jarosław Such
