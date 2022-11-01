@@ -97,21 +97,3 @@ def cmp_frac(frac1, frac2):
 
 def frac2float(frac):
     return float(frac[0])/float(frac[1])
-
-'''
-frac1 = [1, 2]
-frac2 = [3, 4]
-print("1/2 + 3/4: {}".format(add_frac(frac1, frac2)))
-print("3/15 + 2/5: {}".format(add_frac([3,15], [2,5])))
-print("3/100 + 2/100: {}".format(add_frac([3,100], [2,100])))
-print("16/27 + 6/19: {}".format(add_frac([16,27], [6,19])))
-
-print("1/2 - 3/4: {}".format(sub_frac(frac1, frac2)))
-print("3/15 - 2/5: {}".format(sub_frac([3,15], [2,5])))
-print("4/100 - 2/100: {}".format(sub_frac([4,100], [2,100])))
-print("16/27 - 6/19: {}".format(sub_frac([16,27], [6,19])))
-
-print("1/8 * 9/3: {}".format(mul_frac([1,8], [9,3])))
-'''
-
-#print("1/2 / 16/27: {}".format(div_frac([1,2], [16,27])))
