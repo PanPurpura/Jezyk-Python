@@ -1,13 +1,15 @@
 # Laboratoria nr. 6
 
 # Zad. 6.2
-# W pliku points.py zdefiniowaæ klasê Point wraz z potrzebnymi metodami.
-# Punkty s¹ traktowane jak wektory zaczepione w pocz¹tku uk³adu wspó³rzêdnych, o koñcu w po³o¿eniu (x, y).
-# Napisaæ kod testuj¹cy modu³ points.
+# W pliku points.py zdefiniowac klase Point wraz z potrzebnymi metodami.
+# Punkty sa traktowane jak wektory zaczepione w poczatku ukladu wspo³rzednych, o koncu w polozeniu (x, y).
+# Napisac kod testujacy modul points.
 
 import math
 
 class Point:
+
+    # Klasa reprezentujaca punkty na plaszczyznie.
 
     # Konstruktor
     def __init__(self, x, y):
