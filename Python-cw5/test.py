@@ -1,3 +1,8 @@
+# Laboratorium nr. 5
+# Zad. 5.2
+
+# Testy wszystkich funkcji definiujacych dzialania na ulamkach.
+
 from fracs import *
 import unittest
 

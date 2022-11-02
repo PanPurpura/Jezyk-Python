@@ -1,5 +1,16 @@
+# Laboratorium nr. 5
+# Zadanie 5.2
+
+# Stworzyæ plik fracs.py i zapisaæ w nim funkcje do dzia³añ na u³amkach.
+# U³amek bêdzie reprezentowany przez listê dwóch liczb ca³kowitych [licznik, mianownik].
+# Napisaæ kod testuj¹cy modu³ fracs. Nie nale¿y korzystaæ z klasy Fraction z modu³u fractions. 
+# Mo¿na wykorzystaæ funkcjê fractions.gcd() implementuj¹c¹ algorytm Euklidesa.
+
+# We wszystkich przypadkach gdzie to bylo mozliwe, zastosowalem skracanie ulamkow.
+
 import fractions
 
+# Funkcja dodajaca dwa ulamki, u1 + u2.
 def add_frac(frac1, frac2):
     nwd = fractions.gcd(frac1[1], frac2[1])
     nww = frac1[1]*frac2[1]/nwd
@@ -19,6 +30,7 @@ def add_frac(frac1, frac2):
     frac[1] = frac[1]/skr
     return frac
 
+# Funkcja odejmujaca dwa ulamki, u1 - u2.
 def sub_frac(frac1, frac2):
     nwd = fractions.gcd(frac1[1], frac2[1])
     nww = frac1[1]*frac2[1]/nwd
@@ -38,7 +50,7 @@ def sub_frac(frac1, frac2):
     frac[1] = frac[1]/skr
     return frac
     
-
+# Funkcja mnozaca dwa ulamki, u1 * u2
 def mul_frac(frac1, frac2):
     frac = [frac1[0] * frac2[0], frac1[1]*frac2[1]]
     nwd = fractions.gcd(frac[0], frac[1])
@@ -46,6 +58,7 @@ def mul_frac(frac1, frac2):
     frac[1] = frac[1]/nwd
     return frac
 
+# Funkcja dzielaca dwa ulamki, u1 / u2
 def div_frac(frac1, frac2):
     frac = [frac1[0] * frac2[1], frac1[1]*frac2[0]]
     nwd = fractions.gcd(frac[0], frac[1])
@@ -53,12 +66,14 @@ def div_frac(frac1, frac2):
     frac[1] = frac[1]/nwd
     return frac
 
+# Funkcja sprawdzajaca czy ulamek jest dodatni.
 def is_positive(frac):
     if frac[0] < 0 or frac[1] < 0:
         return False
     else:
         return True
 
+# Funkcja sprawdzajaca czy ulamek daje 0.
 def is_zero(frac):
     if frac[0] == 0:
         return True
@@ -68,6 +83,7 @@ def is_zero(frac):
     else:
         return False
 
+# Funkcja porownujaca dwa ulamki.
 def cmp_frac(frac1, frac2):
     if frac1[0] == frac2[0]:
         if frac1[1] < frac2[1]:
@@ -95,5 +111,6 @@ def cmp_frac(frac1, frac2):
         else:
             return 0
 
+# Funkcja konwertujaca ulamek na float.
 def frac2float(frac):
     return float(frac[0])/float(frac[1])
