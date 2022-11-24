@@ -1,8 +1,8 @@
-# Laboratorium nr. 6
-# Zad. 6.4
+# Laboratorium nr. 7
+# Zad. 7.4
 
 # W pliku triangles.py zdefiniowac klase Triangle wraz z potrzebnymi metodami.
-# Trojkat jest okreslony przez podanie trzech wierzcholkow.
+# Wykorzystac wyjatek ValueError do obslugi bledow.
 # Napisac kod testujacy modul triangles.
 
 from Point import *
@@ -11,7 +11,7 @@ import math
 class Triangle:
     # Klasa reprezentujaca trojkat na plaszczyz\nie.
 
-    def count_len(x1, y1, x2, y2):
+    def count_len(self, x1, y1, x2, y2):
         return math.fabs(math.sqrt(pow(x2-x1, 2) + pow(y2-y1, 2)))
 
     # Konstruktor
@@ -39,7 +39,7 @@ class Triangle:
 
         l1 = (self.pt1, self.pt2, self.pt3)
         l2 = (other.pt1, other.pt2, other.pt3)
-        return sorted(l1) == sorted(l2)
+        return l1 == l2
 
     # Sprawdzenie czy dwa trojkaty nie sa rowne, t != t1
     def __ne__(self, other):
