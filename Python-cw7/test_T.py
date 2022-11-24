@@ -1,5 +1,5 @@
-# Laboratorium nr. 6
-# Zad. 6.4
+# Laboratorium nr. 7
+# Zad. 7.4
 
 # Modul testujacy klase Triangle oraz jej zaimplementowane metody.
 # Ponizej znajduja sie testy kazdej z opisanych metod klasy Triangle.

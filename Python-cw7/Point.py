@@ -1,6 +1,5 @@
-# Laboratoria nr. 6
+# Laboratoria nr. 7
 
-# Zad. 6.2
 # W pliku points.py zdefiniowac klase Point wraz z potrzebnymi metodami.
 # Punkty sa traktowane jak wektory zaczepione w poczatku ukladu wspo³rzednych, o koncu w polozeniu (x, y).
 # Napisac kod testujacy modul points.
