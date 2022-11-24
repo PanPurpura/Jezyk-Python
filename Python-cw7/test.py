@@ -1,4 +1,5 @@
-# Laboratorium nr. 7
+# Laboratorium nr. 6
+# Zad. 6.2
 
 # Modul testujacy klase Point oraz jej zaimplementowane metody.
 # Ponizej znajduja sie testy kazdej z opisanych metod klasy Point.

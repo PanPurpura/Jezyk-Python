@@ -1,11 +1,3 @@
-# Laboratorium nr. 7
-# Zad. 7.6
-
-# Stworzyc nastepujace iteratory nieskonczone:
-# (a) zwracajacy 0, 1, 0, 1, 0, 1, ...,
-# (b) zwracajacy przypadkowo jedna wartosc z ("N", "E", "S", "W") [bladzenie przypadkowe na sieci kwadratowej 2D],
-# (c) zwracajacy 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, ... [numery dni tygodnia].
-
 import itertools
 import random
 
