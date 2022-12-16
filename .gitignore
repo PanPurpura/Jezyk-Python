@@ -1,0 +1,7 @@
+
+*.sqlite
+*.vsidx
+*.json
+*.lock
+*.pyc
+.vs/Jezyk-Python/v17/.wsuo
