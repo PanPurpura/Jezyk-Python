@@ -2,3 +2,6 @@
 Zadania wykonwane w ramach przedmiotu język python
 
 Jarosław Such
+
+Projekt
+==================================================
