@@ -15,6 +15,8 @@ class Graph:
         self.directed = directed        # bool, czy graf skierowany
         
         self.matrix = [[None for _ in range(self.n)] for _ in range(self.n)]
+        self.list_of_nodes = []
+        self.list_of_edges = []
 
     def v(self):    # zwraca liczbe wierzcholkow                                                                                    SUCCESS
         return len(self.list_of_nodes)
@@ -55,6 +57,15 @@ class Graph:
         if node > self.n-1 or node < 0:
             raise ValueError("Mozna usunac jedynie wierzcholki w zakresie [0, {}]".format(self.n-1))
 
+        new_list = []
+        for elem in self.list_of_edges:
+            if elem.source == node or elem.target == node:
+                self.matrix[elem.source][elem.target] = 0
+            else:
+                new_list.append(elem)
+
+        self.list_of_edges = new_list
+
         for i in range(self.n):
             self.matrix[node][i] = None
 
@@ -63,30 +74,31 @@ class Graph:
                 self.list_of_nodes.remove(elem)
                 break
 
-    def add_edge(self, edge):       # wstawienie krawedzi
-        if not (edge.source in self.list_of_nodes or edge.target in self.list_of_nodes):
+    def add_edge(self, edg):       # wstawienie krawedzi
+        if not (edg.source in self.list_of_nodes and edg.target in self.list_of_nodes):
             raise ValueError("Probujesz dodac krawedz do wierzcholka lub od wierzcholka ktory nie istnieje!")
+        if edg in self.list_of_edges:
+            raise ValueError("Krawedz juz istnieje!")
         
-        if not self.is_directed(): # dodanie krawedzi do grafu nieskierowanego
-            if edge.source > self.n-1 or edge.source < 0 or edge.target > self.n-1 or edge.target < 0:
+        if self.is_directed() == False: # dodanie krawedzi do grafu nieskierowanego
+            if edg.source > self.n-1 or edg.source < 0 or edg.target > self.n-1 or edg.target < 0:
                 raise ValueError("Krawedz ma bledne wierzcholki!")
 
-            self.matrix[edge.source][edge.target] = edge
-            self.list_of_edges.append(edge)
+            self.matrix[edg.source][edg.target] = edg
+            self.list_of_edges.append(edg)
 
-            ed = edge.__invert__()
-            self.matrix[edge.target][edge.source] = ed
+            ed = edge(edg.target, edg.source, edg.weight)
+            self.matrix[edg.target][edg.source] = ed
             self.list_of_edges.append(ed)
         else:
-            if edge.source > self.n-1 or edge.source < 0 or edge.target > self.n-1 or edge.target < 0:
+            if edg.source > self.n-1 or edg.source < 0 or edg.target > self.n-1 or edg.target < 0:
                 raise ValueError("Krawedz ma bledne wierzcholki!")
 
-            self.matrix[edge.source][edge.target] = edge
-            self.list_of_edges.append(edge)
+            self.matrix[edg.source][edg.target] = edg
+            self.list_of_edges.append(edg)
 
     def has_edge(self, edge):
-        return isinstance(self.matrix[edge.source][edge.target], edge)
-        #return edge in self.list_of_edges
+        return edge in self.list_of_edges
 
     def del_edge(self, edge):     # usuniecie krawedzi
 
@@ -102,6 +114,7 @@ class Graph:
                 if elem.source == edge.source and elem.target == edge.target and elem.weight == edge.weight:
                     self.list_of_edges.remove(elem)
                     break
+
         else:
             self.matrix[edge.source][edge.target] = 0
             self.matrix[edge.target][edge.source] = 0
@@ -120,54 +133,37 @@ class Graph:
 
         return l
 
-    def weight(self, edge):        # zwraca wage krawedzi
-        if not self.has_edge():
-            raise ValueError("Graf nie ma takiej krawedzi!")
-
-        return edge.weight
+    def weight(self, edge_s, edge_t):        # zwraca wage krawedzi
+        return self.matrix[edge_s][edge_t].weight
 
     def iternodes(self):         # iterator po wierzcholkach
-        iternodes = IterNode()
-        iternodes_iter = iter(iternodes)
 
-        return iternodes_iter
+       return iter(self.list_of_nodes)
 
     def iteradjacent(self, node):  # iterator po wierzcholkach sasiednich
         neigh = self.neighbours(node)
 
-        iteradjacent = IterAdjacent(neigh)
-        iteradjacent_iter = iter(iteradjacent)
-
-        return iteradjacent_iter
+        return iter(neigh)
 
     def iteroutedges(self, node):  # iterator po krawedziach wychodzacych
         
         l = [] 
         for elem in self.matrix[node]:
-            if isinstance(self.matrix[node][elem], edge):
-                l.append(self.matrix[node][elem])
+            if isinstance(elem, edge):
+                l.append(elem)
 
-        iterout = IterOutEdges(l)
-        iterout_it = iter(iterout)
-
-        return iterout_it
+        return iter(l)
 
     def iterinedges(self, node):   # iterator po krawedziach przychodzacych
         l = [] 
-        for elem in self.matrix[node]:
-            if isinstance(self.matrix[elem][node], edge):
-                l.append(self.matrix[elem][node])
+        for elem in self.list_of_edges:
+            if elem.target == node:
+                l.append(elem)
 
-        inner = IterInEdges(l)
-        inner_iter = iter(inner)
-
-        return inner_iter
+        return iter(l)
 
     def iteredges(self):           # iterator po krawedziach
-        iteredg = IterEdges()
-        iteredg_iter = iter(iteredg)
-
-        return iteredg_iter
+        return iter(self.list_of_edges)
 
     def copy(self):                # zwraca kopie grafu
         new_graph = Graph(self.n, self.directed)
@@ -176,69 +172,79 @@ class Graph:
             for elem1 in range(len(self.matrix[elem])):
                 new_graph.matrix[elem][elem1] = self.matrix[elem][elem1]
 
-        new_graph.list_of_nodes = self.list_of_nodes
-
-        for elem in self.list_of_nodes:
-            new_graph.add_node(self.list_of_nodes[elem])
-
+        new_graph.list_of_nodes = self.list_of_nodes 
+        new_graph.list_of_edges = self.list_of_edges
+       
         return new_graph
 
     def transpose(self):           # zwraca graf transponowany]
-        if self.is_directed():
+        if not self.is_directed():
             return self
         else:
             new_graph = Graph(self.n, self.directed)
-            new_graph.list_of_nodes = self.list_of_nodes
 
             for elem in self.list_of_nodes:
-                new_graph.add_node(self.list_of_nodes[elem])
+                new_graph.add_node(elem)
 
-            i = 0
-            j = 0
-            for elem in range(len(self.matrix)):
-                while(j <= i and i < len(self.matrix[elem])):
-                    new_graph.matrix[elem][j] = self.matrix[j][elem]
-                    new_graph.matrix[j][elem] = self.matrix[elem][j]
-                    j += 1
-                i += 1
-                j = 0
-            
+            for elem in self.list_of_edges:
+                new_graph.add_edge(elem.__invert__())
+         
             return  new_graph
                 
 
     def complement(self):         # zwraca dopelnienie grafu
         new_graph = Graph(self.n, self.directed)
-        new_graph.list_of_nodes = self.list_of_nodes
         
         for elem in self.list_of_nodes:
-            new_graph.add_node(self.list_of_nodes[elem])
+            new_graph.add_node(elem)
 
         for elem in new_graph.list_of_nodes:
             for elem1 in range(len(self.matrix[elem])):
                 if isinstance(self.matrix[elem][elem1], edge):
                     continue
                 else:
-                    new_graph.add_edge(edge(elem, elem1))
+                    try:
+                        new_graph.add_edge(edge(elem, elem1))
+                    except ValueError:
+                        continue
+
+        return new_graph
 
     def subgraph(self, nodes):     # zwraca podgraf indukowany
+
+        for elem in nodes:
+            if not elem in self.list_of_nodes:
+                raise ValueError("Wyjsciowy graf nie ma jednego lub wielu z podanych wierzcholkow")
+
         new_graph = Graph(self.n, self.directed)
-        new_graph.list_of_nodes = self.list_of_nodes
 
         for elem in nodes:
-            new_graph.add_node(self.list_of_nodes[elem])
+            new_graph.add_node(elem)
 
         for elem in nodes:
-            for elem1 in self.matrix[elem]:
-                if self.matrix[elem][elem1].target in nodes:
-                    new_graph.matrix[elem][elem1] = self.matrix[elem][elem1]
+            for elem1 in range(len(self.matrix[elem])):
+                if isinstance(self.matrix[elem][elem1], edge):
+                    if self.matrix[elem][elem1].target in nodes:
+                        try:
+                            new_graph.add_edge(edge(elem, elem1, self.matrix[elem][elem1].weight))
+                        except ValueError:
+                            continue
+
+                    else:
+                        continue
                 else:
                     continue
 
         return new_graph
 
     def show_matrix(self):
-        s = ""
+        s = "Macierz sasiedztwa: \n\n   "
+        for i in range(0, self.n):
+            s += "{} ".format(i)
+        s+="\n"
+
         for elem in range(len(self.matrix)):
+            s += "{} ".format(elem)
             for elem1 in range(len(self.matrix[elem])):
                 if isinstance(self.matrix[elem][elem1], edge):
                     s += " e"
@@ -263,81 +269,3 @@ class Graph:
             s += "({}, {}, {}) ".format(self.list_of_edges[elem].source, self.list_of_edges[elem].target, self.list_of_edges[elem].weight)
 
         return s
-                    
-class IterNode:
-    def __iter__(self):
-        self.node = Graph.list_of_nodes[0]
-        return self
-
-    def __next__(self):
-        i = 1
-        if i < len(Graph.list_of_nodes):
-            next_node = self.node
-            self.node = Graph.list_of_nodes[i]
-            i += 1
-            return self.node
-        else:
-            raise StopIteration
-
-class IterAdjacent:
-    def __iter__(self, neigh):
-        self.neigh = neigh
-        self.res = neigh[0]
-        return self
-
-    def __next__(self):
-        i = 1
-        if i < len(self.neigh):
-            next_res = self.res
-            self.res = self.neigh[i]
-            i += 1
-            return self.res
-        else:
-            raise StopIteration
-
-class IterEdges:
-    def __iter__(self, neigh):
-        self.edges = Graph.list_of_edges[0]
-        return self
-
-    def __next__(self):
-        i = 1
-        if i < len(Graph.list_of_edges):
-            next_edge = self.edges
-            self.edges = Graph.list_of_edges[i]
-            i += 1
-            return self.edges
-        else:
-            raise StopIteration
-
-class IterOutEdges:
-    def __iter__(self, out):
-        self.o = out
-        self.res = self.o[0]
-        return self
-
-    def __next__(self):
-        i = 1
-        if i < len(self.o):
-            next_edge = self.res
-            self.res = self.o[i]
-            i += 1
-            return self.res
-        else:
-            raise StopIteration
-
-class IterInEdges:
-    def __iter__(self, inner):
-        self.li = inner
-        self.res = self.li[0]
-        return self
-
-    def __next__(self):
-        i = 1
-        if i < len(self.li):
-            next_edge = self.res
-            self.res = self.li[i]
-            i += 1
-            return self.res
-        else:
-            raise StopIteration
