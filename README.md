@@ -8,9 +8,9 @@ Projekt
 Dla ADT grafów z wykładu stworzyć implementację grafów opartą na macierzy sąsiedztwa (lista list). Wierzchołki są liczbami int od 0 do n-1. Zaimplementować BFS i DFS.
 
 Macierz sąsiedztwa w tym wypadku może zwierać trzy elementy, które oznaczają następujące rzeczy:
-n - None, dany wierzcholek nie istnieje i nie może mieć żadnej krawędzi.
-0 - Wierzchołek istnieje a w podanym miejscu nie ma krawędzi.
-e - Pomiędzy dwoma wierzchołkami istnieje krawędź e
+- n - None, dany wierzcholek nie istnieje i nie może mieć żadnej krawędzi.
+- 0 - Wierzchołek istnieje a w podanym miejscu nie ma krawędzi.
+- e - Pomiędzy dwoma wierzchołkami istnieje krawędź e
 
 Warto zaznaczyć że w tej implementacji możemy dodać krawędź wtedy i tylko wtedy gdy dla dwóch wierzchołków, dla których chcemy utworzyć krawędź muszą w macierzy sąsiedztwa w odpowiednich wierszach zawierać 0. Oznacza to że dane dwa wierzchołki zostały utworzone. Nie możemy stworzyć krawędzi jeśli w rzędzie któregoś wierzchołka znajdują się "n", ponieważ nie został on wtedy dodany do grafu. 
 
