@@ -19,10 +19,20 @@ menu = "\nMenu programu: \n\n"\
     + "13. Iterator po wierzcholkach sasiednich   14. Iterator po krawedziach wychodzacych\n"\
     + "15. Iterator po krawedziach przychodzacych 16. Iterator po krawedziach\n"\
     + "17. Zwroc kopie grafu                      18. Zwroc graf transponowany\n"\
-    + "19. Zwroc dopelnienie grafu                20. Zwroc podgraf indukowany\n\n"\
+    + "19. Zwroc dopelnienie grafu                20. Zwroc podgraf indukowany\n"\
+    + "21. DFS                                    22. BFS\n\n"\
     + "                     21. Zakoncz dzialanie programu"
-n = int(size)
-d = False
+
+try:
+    n = int(size)
+    d = False
+except ValueError:
+    print("Podano bledne dane!!!")
+    sys.exit()
+
+if (directed != "True" and directed != "False") :
+    raise ValueError("Podano bledne dane!!!")
+
 if directed == "True":
     d = True
 
@@ -48,47 +58,75 @@ while True:
             print("Skierowany? {} \n".format(g.is_directed()))
         case "5":
             cls()
-            n = int(input("Podaj numer wierzcholka ktory chcesz dodac [0, {}]: ".format(g.n-1)))
+            try:
+                n = int(input("Podaj numer wierzcholka ktory chcesz dodac [0, {}]: ".format(g.n-1)))
+            except ValueError:
+                print("Bledne dane, przekierowanie do menu")
+                continue
             g.add_node(n)
             print("Dodano wierzcholek o numerze: {} \n".format(n))
         case "6":
             cls()
-            n = int(input("Podaj numer wierzcholka: "))
+            try:
+                n = int(input("Podaj numer wierzcholka ktory chcesz dodac [0, {}]: ".format(g.n-1)))
+            except ValueError:
+                print("Bledne dane, przekierowanie do menu")
+                continue
             print(g.has_node(n))
             print("\n")
         case "7":
             cls()
-            n = int(input("Podaj numer wierzcholka ktory chcesz usunac [0, {}]: ".format(g.n-1)))
+            try:
+                n = int(input("Podaj numer wierzcholka ktory chcesz dodac [0, {}]: ".format(g.n-1)))
+            except ValueError:
+                print("Bledne dane, przekierowanie do menu")
+                continue
             g.del_node(n)
             print("Usunieto wierzcholek o numerze: {} \n".format(n))
         case "8":
             cls()
-            s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
-            t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
-            w = int(input("Podaj wage krawedzi: "))
+            try:
+                s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
+                t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
+                w = int(input("Podaj wage krawedzi: "))
+            except ValueError:
+                print("Bledne dane, przekierowanie do menu")
+                continue
             ed = edge(s, t, w)
             g.add_edge(ed)
             #del s,t,w
             print("Dodano krawedz: {}".format(ed))
         case "9":
             cls()
-            s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
-            t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
-            w = int(input("Podaj wage krawedzi: "))
+            try:
+                s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
+                t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
+                w = int(input("Podaj wage krawedzi: "))
+            except ValueError:
+                print("Bledne dane, przekierowanie do menu")
+                continue
             ed = edge(s,t,w)
             print(g.has_edge(ed))
         case "10":
             cls()
-            s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
-            t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
-            w = int(input("Podaj wage krawedzi: "))
+            try:
+                s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
+                t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
+                w = int(input("Podaj wage krawedzi: "))
+            except ValueError:
+                print("Bledne dane, przekierowanie do menu")
+                continue
             ed = edge(s,t,w)
             g.del_edge(ed)
             print("Usunieto krawedz: ({}, {}, {})".format(s,t,w))
         case "11":
             cls()
-            s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
-            t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
+            try:
+                s = int(input("Podaj od jakiego wierzcholka wychodzi krawedz: "))
+                t = int(input("Podaj do jakiego wierzcholka wchodzi krawedz: "))
+            except ValueError:
+                print("Bledne dane, przekierowanie do menu")
+                continue
             print("Waga podanej krawedzi to: {}".format(g.weight(s,t)))
         case "12":
             cls()
@@ -193,13 +231,38 @@ while True:
                 c = (input("Podaj wierzcholki dla podgrafu indukowanego (stop == koniec): "))
                 if c == "stop":
                     break;
-                nodes.append(int(c))
-
+                try:
+                    nodes.append(int(c))
+                except ValueError:
+                    print("Podano bledne dane, obliczanie podgrafu dla podanych wierzcholkow.")
+                    break;
+                    
             g1 = g.subgraph(nodes)
             print(g1.show_matrix())
             print("Wierzcholki: {}".format(g1.show_list_of_nodes()))
             print("Krawedzie: {}".format(g1.show_list_of_edges()))
         case "21":
+            cls()
+            vis = []
+            try:
+                node = int(input("Podaj wierzcholek startowy: "))
+            except ValueError:
+                print("Podano bledne dane, przekierowanie do menu")
+                continue
+            g.DFS(node, vis)
+            print(vis)
+        case "22":
+            cls()
+            vis = []
+            queue = []
+            try:
+                node = int(input("Podaj wierzcholek startowy: "))
+            except ValueError:
+                print("Podano bledne dane, przekierowanie do menu")
+                continue
+            g.BFS(node, vis, queue)
+            print(vis)
+        case "23":
             cls()
             print("Konczenie dzialania programu ...")
             sys.exit()
