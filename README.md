@@ -38,7 +38,7 @@ Implementacja grafu zawiera także proste menu, które pozwala na jej obsługę 
 21. show_matrix() - Funkcja wyświetlająca macierz sąsiedztwa.
 22. show_list_of_nodes() - Funkcja wyświetlająca listę wierzchołków grafu.
 23. show_list_of_edges() - Funkcja wyświetlająca listę krawędzi grafu.
-24. DFS(node) - Przeszukiwanie wgłąb od podanego wierzchołka.
+24. DFS(node) - Przeszukiwanie w głąb od podanego wierzchołka.
 25. BFS(node) - Przeszukiwanie wszerz od podanego wierzchołka.
 
 Powyższa implementacja zawiera także dwie dodatkowe listy do przechowywania wszystkich wierzchołków oraz krawędzi znajdujących się w grafie.
