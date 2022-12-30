@@ -269,3 +269,20 @@ class Graph:
             s += "({}, {}, {}) ".format(self.list_of_edges[elem].source, self.list_of_edges[elem].target, self.list_of_edges[elem].weight)
 
         return s
+
+    def DFS(self, node, vis):
+        if node not in vis:
+            vis.append(node)
+            for neighbour in self.neighbours(node):
+                self.DFS(neighbour, vis)
+
+    def BFS(self, node, vis, queue):
+        vis.append(node)
+        queue.append(node)
+
+        while queue:
+            m = queue.pop(0)
+            for neighbour in self.neighbours(m):
+                if neighbour not in vis:
+                    vis.append(neighbour)
+                    queue.append(neighbour)
