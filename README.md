@@ -14,7 +14,7 @@ Macierz sąsiedztwa w tym wypadku może zwierać trzy elementy, które oznaczaj�
 
 Warto zaznaczyć że w tej implementacji możemy dodać krawędź wtedy i tylko wtedy gdy dla dwóch wierzchołków, dla których chcemy utworzyć krawędź muszą w macierzy sąsiedztwa w odpowiednich wierszach zawierać 0. Oznacza to że dane dwa wierzchołki zostały utworzone. Nie możemy stworzyć krawędzi jeśli w rzędzie któregoś wierzchołka znajdują się "n", ponieważ nie został on wtedy dodany do grafu. 
 
-Implementacja grafu zawiera także proste menu, które pozwala na jej obsługę oraz testowanie odpowiednich funkcji. Zaimplementowane zostały następujące funkcje:
+Implementacja grafu zawiera także proste menu, które pozwala na jej obsługę oraz testowanie odpowiednich funkcji (UWAGA: Aby menu zadziałało prawidłowo koniecznie jest użycie Pythona 3.11, w którym wprowadzono instrukcje match()). Zaimplementowane zostały następujące funkcje:
 1. v() - Zwraca liczbę wierzchołków.
 2. e() - Zwraca liczbę krawędzi.
 3. is_directed() - Sprwadza czy graf jest skierowany czy też nie.
