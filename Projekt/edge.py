@@ -1,4 +1,4 @@
-class edge:
+class Edge:
     """Klasa dla krawedzi skierowanej z waga."""
 
     def __init__(self, source, target, weight=1):
@@ -40,4 +40,4 @@ class edge:
 
     def __invert__(self):
         """Zwraca krawedz o przeciwnym kierunku (~edge)."""
-        return edge(self.target, self.source, self.weight)
+        return Edge(self.target, self.source, self.weight)
